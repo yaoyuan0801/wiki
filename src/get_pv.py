@@ -40,7 +40,7 @@ def pageViewCount(files):
                     print i / 10000,
                     stdout.flush()
     print
-    for cnt, page in heap:
+    for cnt, page in sorted(heap):
         print urllib2.unquote(page), "--", cnt
 
 
