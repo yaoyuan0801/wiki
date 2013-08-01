@@ -8,12 +8,12 @@ local_path = '/'.join(os.getcwd().split('/')[0 : -1])
 parent_url = "http://dumps.wikimedia.org/other/pagecounts-raw/"
 curr_file_name = None
 
-def initLog
-    log_file = '/'.join([path, 'log', 'wiki_log'])
+def initLog():
+    log_file = '/'.join([local_path, 'log', 'wiki_log'])
     logging.basicConfig(filename=log_file, level=logging.DEBUG)
     
 def downloadFile(url):
-    file_name = '/'.join([file_path, 'data', url.split('/')[-1]])
+    file_name = '/'.join([local_path, 'data', url.split('/')[-1]])
     try:
         u = urllib2.urlopen(url)
     except:
@@ -39,16 +39,15 @@ def getStrFromURL(url, target):
     except:
         logging.debug(url, "cannot be opened.")
         return None
-    html = u_parent.read()
+    html = u.read()
     regex = re.compile('%s'%target)
-    return [res.group(1) for res in re.finditer(regex, html)]
-
+    return [res.group() for res in re.finditer(regex, html)]
 
 def generateURL():
     years = getStrFromURL(parent_url, '20\d{2}')
     if not years:
         return None
-    year_url = '/'.join([parent_url, years[-1]])
+    year_url = '/'.join([parent_url, max(years)])
     months = getStrFromURL(year_url, '20\d{2}-\d{2}')
     if not months:
         return None
@@ -65,3 +64,11 @@ def generateURL():
         file_url.append('/'.join([month_url, file_name]))
     return file_url
 
+
+def main():
+    initLog()
+    l = generateURL()
+    print l
+
+if __name__ == "__main__":
+    main()
