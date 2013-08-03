@@ -5,7 +5,7 @@ import logging
 import re
 
 local_path = '/'.join(os.getcwd().split('/')[0 : -1])
-parent_url = "http://dumps.wikimedia.org/other/pagecounts-raw/"
+parent_url = "http://dumps.wikimedia.org/other/pagecounts-raw"
 curr_file_name = None
 
 def initLog():
@@ -13,6 +13,8 @@ def initLog():
     logging.basicConfig(filename=log_file, level=logging.DEBUG)
     
 def downloadFile(url):
+    print "Download", url
+    logging.debug("Download %s" %url)
     file_name = '/'.join([local_path, 'data', url.split('/')[-1]])
     try:
         u = urllib2.urlopen(url)
@@ -30,8 +32,8 @@ def downloadFile(url):
                 break
             f.write(buffer)
     elapsed_time = time.time() - start_time
-    logging.debug("Download time = ", elapsed_time)
-    logging.debug("Download speed = ", file_size / elapsed_time)
+    logging.debug("Download time = %d" % elapsed_time)
+    logging.debug("Download speed = %d" % file_size / elapsed_time)
 
 def getStrFromURL(url, target):
     try:
@@ -67,8 +69,9 @@ def generateURL():
 
 def main():
     initLog()
-    l = generateURL()
-    print l
+    #l = generateURL()
+    for url in generateURL():
+        downloadFile(url)
 
 if __name__ == "__main__":
     main()
