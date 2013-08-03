@@ -9,7 +9,10 @@ parent_url = "http://dumps.wikimedia.org/other/pagecounts-raw"
 curr_file_name = None
 
 def initLog():
-    log_file = '/'.join([local_path, 'log', 'wiki_log'])
+    log_dir = '/'.join([local_path, 'log'])
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_file = '/'.join([log_dir, 'log'])
     logging.basicConfig(filename=log_file, level=logging.DEBUG)
     
 def downloadFile(url):
@@ -32,8 +35,8 @@ def downloadFile(url):
                 break
             f.write(buffer)
     elapsed_time = time.time() - start_time
-    logging.debug("Download time = %d" % elapsed_time)
-    logging.debug("Download speed = %d" % file_size / elapsed_time)
+    logging.debug("Download time = %d sec" % elapsed_time)
+    logging.debug("Download speed = %f" % file_size / elapsed_time)
 
 def getStrFromURL(url, target):
     try:
