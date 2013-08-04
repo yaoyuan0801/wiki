@@ -7,7 +7,8 @@ import heapq
 from sets import Set
 import urllib2
 special_page = Set(['Wikipedia','index.html', '_', 'undefined', \
-'Undefined', 'Main_Page', 'edit', 'main_page'])
+'Undefined', 'Main_Page', 'edit', 'main_page', 'Portal:', \
+'File:', 'Special:', '404_error','index.php', 'null'])
 num_top = 50
 
 def getFileList():
@@ -16,10 +17,9 @@ def getFileList():
 def testPage(tmp):
     if tmp[0] != 'en':
         return False
-    if tmp[1] in special_page:
-        return False
-    if tmp[1].startswith("Special:") or tmp[1].startswith("Wikipedia:"):
-        return False
+    for str in special_page:
+        if tmp[1].startswith(str):
+            return False
     return True
 
 def pageViewCount(files):
@@ -63,12 +63,13 @@ def pageViewToRedis(files):
                     # 500 per hour is not bad for a wiki page
                     if total_cnt >= 500 * file_cnt:
                         page_view[tmp[1]] = cnt
-                if i % 10000 == 0:
-                    print i / 10000,
+                if i % 100000 == 0:
+                    print i / 100000,
+                    stdout.flush()
     print
     print "Time to go through the file = %d sec" %(time.time() - start_time)
     print "Total number of pages that has %d visits or more = %d" %(500 * file_cnt, len(page_view))
-    for page, cnt in sorted([(v,k) for k,v in page_view.items()], reverse=True):
+    for cnt, page in sorted([(v,k) for k,v in page_view.items()], reverse=True):
         print urllib2.unquote(page), '--',cnt
     print "Time to go through the file = %d sec" %(time.time() - start_time)
      
