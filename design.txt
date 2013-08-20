@@ -1,8 +1,11 @@
-Redis is used to store page views.
+3 layer architecture:
+Flask is used as front end
+Redis is used to store top 100 list of last hour and last day
+mySQL is used to store all data on disk
+
 In Redis we keep the following data structures:
-1. wiki:file_list: list of source file names. These indicate the time frame in which stats are drawn
-2. wiki:page: list of view counts. Each list contain at most 24 values (one day worth of data).
-2.5 wiki:page_total: sum of view counts for each page
 3. wiki:topview_day: sorted list of top pages of last day
 4. wiki:topview_hour: sorted list of top pages of last hour
+
+In mySQL we store all downloaded results. Need a good design for easy generation of top list
 
