@@ -7,5 +7,11 @@ In Redis we keep the following data structures:
 3. wiki:topview_day: sorted list of top pages of last day
 4. wiki:topview_hour: sorted list of top pages of last hour
 
-In mySQL we store all downloaded results. Need a good design for easy generation of top list
+In mySQL we store all downloaded results. 
+Need a good design for easy generation of top list
 
+Notes:
+It seems that the 10th is around 4k, 
+whereas the 3000th is around 200.
+Need a good way to handle multiple datasets.
+One way is to union all tables, but that is going to be super costy.

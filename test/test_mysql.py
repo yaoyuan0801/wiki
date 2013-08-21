@@ -28,7 +28,6 @@ def writeToNewTable(file_name, con, table_name):
                page VARCHAR(100) NOT NULL,
                count INT UNSIGNED ZEROFILL
              )'''
-    #print sql
     cursor = con.cursor()
     cursor.execute(sql)
     for line in file_name:
