@@ -15,3 +15,4 @@ It seems that the 10th is around 4k,
 whereas the 3000th is around 200.
 Need a good way to handle multiple datasets.
 One way is to union all tables, but that is going to be super costy.
+Hopefully get 5000 is good enough
