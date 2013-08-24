@@ -2,7 +2,21 @@
 {% block content %}
     <div class = "jumbo">
         <h2>Popular Wikipedia Pages of Last Hour</h2>
-            <p>Breaking bad</p>
-            <p>Mikey mouse</p>
+        <table class="table table-hover">
+            <thread>
+                <tr>
+                    <th>Page</th>
+                    <th>Count</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for name,cnt in top_hour.iteritems() %}
+                    <tr>
+                        <td>{{name}}</td>
+                       <td>{{cnt}}</td>
+                     </tr>
+                {%endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

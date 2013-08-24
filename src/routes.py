@@ -8,7 +8,9 @@ def home():
 
 @app.route("/ranking")
 def ranking():
-    return render_template('ranking.html')
+    top_hour = {"Mikey Mouse" : 100, "Aloha!": 50, "Random Process":30}
+    return render_template('ranking.html', top_hour = top_hour)
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0')
+    #app.run(host = '0.0.0.0')
+    app.run(host = 'localhost')
