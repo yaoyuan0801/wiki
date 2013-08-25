@@ -10,10 +10,10 @@
                 </tr>
             </thread>
             <tbody>
-                {% for name,cnt in top_hour.iteritems() %}
+                {% for name,cnt in top_hour %}
                     <tr>
-                        <td>{{name}}</td>
-                       <td>{{cnt}}</td>
+                        <td>{{name|safe}}</td>
+                        <td>{{cnt}}</td>
                      </tr>
                 {%endfor %}
             </tbody>

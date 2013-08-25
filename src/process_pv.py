@@ -12,6 +12,7 @@ special_page = Set(['Wikipedia','index.html', '_', 'undefined', \
 'Undefined', 'Main_Page', 'edit', 'main_page', 'Portal:', \
 'File:', 'Special:', '404_error','index.php', 'null', 'Windex.php'])
 num_top = 10000
+redis_name_dest = "wiki:hourly_page_view"
 
 def getFileList():
     return glob.glob("../data/*.gz")
@@ -26,7 +27,9 @@ def testPage(tmp):
 
 def pageViewCount(files, r):
     for f_name in files:
-        redis_dest = 'wiki:' + f_name.split('.')[0]
+        redis_dest = 'wiki:' + f_name
+        #need to pop out the old ones?
+        r.lpush(redis_name_dest, redis_dest)
         heap = []
         with gzip.open(f_name) as f: 
             for line in f:

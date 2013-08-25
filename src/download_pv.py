@@ -14,7 +14,7 @@ def downloadFile(url):
     try:
         u = urllib2.urlopen(url)
     except:
-        log.write(i"%s cannot be opened." %url)
+        log.write("%s cannot be opened." %url)
         return 
     start_time = time.time()
     with open(file_name, 'wb') as f:
@@ -28,7 +28,7 @@ def downloadFile(url):
             f.write(buffer)
     elapsed_time = time.time() - start_time
     log.write("Download time = %d sec" % elapsed_time)
-    logg.write("Download speed = %f" % file_size / elapsed_time)
+    log.write("Download speed = %f" % file_size / elapsed_time)
 
 def getStrFromURL(url, target):
     try:
@@ -64,7 +64,7 @@ def generateURL():
 
 def main():
     log.init()
-    #l = generateURL()
+    l = generateURL()
     for url in generateURL():
         downloadFile(url)
 
