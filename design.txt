@@ -1,14 +1,20 @@
 3 layer architecture:
 Flask is used as front end
-Redis is used to store top 100 list of last hour and last day
+Redis is used to store all useful data structures
 mySQL is used to store all data on disk
 
 In Redis we keep the following data structures:
-3. wiki:topview_day: sorted list of top pages of last day
-4. wiki:topview_hour: sorted list of top pages of last hour
+1. wiki:hourly_page_view: list of keys of scored sets that store the top pages
+2. wiki:topview_day: scored set of top pages of last day
+3. wiki:topview_{time}: scored set of top pages of last hour
+On top of that, a hash for each page is needed to store the url, name and summary.
+
 
 In mySQL we store all downloaded results. 
-Need a good design for easy generation of top list
+
+TODOs:
+A module that downloads and parse the actual wiki page and store the results into the hash
+Wikipedia xml dumps are available. We need to get it and then parse it and put it into mySQL
 
 Notes:
 It seems that the 10th is around 4k, 

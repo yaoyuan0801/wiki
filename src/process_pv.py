@@ -27,7 +27,8 @@ def testPage(tmp):
 
 def pageViewCount(files, r):
     for f_name in files:
-        redis_dest = 'wiki:' + f_name
+        tmp = f_name.split('-')
+        redis_dest = 'wiki:topview_' + tmp[1] + tmp[2].split('.')[0]
         #need to pop out the old ones?
         r.lpush(redis_name_dest, redis_dest)
         heap = []
@@ -42,7 +43,7 @@ def pageViewCount(files, r):
                     heapq.heappop(heap)
         for k, v in heap:
             r.zadd(redis_dest, v, k)
-        #print urllib2.unquote(v), k
+
 
 def pageViewStat(r):
     M = r.zrange(redis_dest, 0, -1, withscores = 1)
